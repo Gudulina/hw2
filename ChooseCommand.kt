@@ -1,3 +1,6 @@
+import Person.Companion.find
+import Person.Companion.showContacts
+
 class ChooseCommand {
     fun chooseCommand() {
         var person: Person? = null
@@ -10,6 +13,7 @@ class ChooseCommand {
                         "add <Имя> <Номер телефона>\n" +
                         "add <Имя> <Адрес электронной почты>\n" +
                         "show\n" +
+                        "find\n" +
                         "help\n" +
                         "exit"
             )
@@ -21,30 +25,35 @@ class ChooseCommand {
             when (command) {
                 is Command.AddPhone -> {
                     person = Person(command.name)
-                    person.phone = command.phone
+                    person.addPhone(command.name, command.phone)
                 }
 
                 is Command.AddEmail -> {
                     person = Person(command.name)
-                    person.email = command.email
+                    person.addEmail(command.name, command.email)
                 }
 
                 is Command.Help -> {
                     command.printhelp()
                 }
 
+                is Command.Find ->{
+                    while(true){
+                        println("Введите <Номер телефона> или <Адрес электронной почты> для поиска\n или exit чтобы выйти")
+                        val data = readln()
+                        if (data == "exit"){
+                            chooseCommand()
+                        } else find(data)
+                    }
+                }
+
                 is Command.Show -> {
-                    if (person == null) {
-                        println("Null")
-                    } else {
-                        if (person.phone.isNotEmpty()) {
-                            println("Имя: ${person.name}, Phone: ${person.phone}")
-                            println()
-                        }
-                        if (person.email.isNotEmpty()) {
-                            println("Имя: ${person.name}, Email: ${person.email}")
-                            println()
-                        }
+                    while(true){
+                        println("Введите <Имя> для поиска\n или exit чтобы выйти")
+                        val data = readln()
+                        if (data == "exit"){
+                            chooseCommand()
+                        } else showContacts(data)
                     }
                 }
             }

@@ -23,7 +23,8 @@ class ExecutingСommands {
             }
 
             inputData == "help" -> Command.Help()
-            inputData == "show" -> Command.Show(null)
+            inputData == "find" -> Command.Find()
+            inputData == "show" -> Command.Show()
             inputData == "exit" -> exitProcess(0)
 
             else -> {
