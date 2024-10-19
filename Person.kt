@@ -1,3 +1,5 @@
+import java.io.File
+
 data class Person(
     var name: String,
     var phone: MutableList<String> = mutableListOf(),
@@ -64,6 +66,20 @@ data class Person(
             } else {
                 println("Нет записей для '$value'")
             }
+        }
+
+        fun export(fileData: String) {
+            val jsonObjects = phoneBook.values.map { person ->
+                json {
+                    appendData("имя", person.name)
+                    appendData("телефон", person.phone)
+                    appendData("email", person.email)
+                }
+            }
+
+            val jsonFormat = "[${jsonObjects.joinToString(", ")}]"
+            File(fileData).writeText(jsonFormat)
+            println("Данные записаны в файл: $fileData")
         }
     }
 }

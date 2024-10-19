@@ -1,7 +1,9 @@
 import Person.Companion.find
 import Person.Companion.showContacts
+import Person.Companion.export
 
 class ChooseCommand {
+    private val EXPORT_TO_FILE = "F:/IT/Kotlin и Окружение/hw4/notebook.json"
     fun chooseCommand() {
         var person: Person? = null
         val commandSorter = ExecutingСommands()
@@ -14,6 +16,7 @@ class ChooseCommand {
                         "add <Имя> <Адрес электронной почты>\n" +
                         "show\n" +
                         "find\n" +
+                        "export\n" +
                         "help\n" +
                         "exit"
             )
@@ -33,9 +36,7 @@ class ChooseCommand {
                     person.addEmail(command.name, command.email)
                 }
 
-                is Command.Help -> {
-                    command.printhelp()
-                }
+                is Command.Help -> command.printhelp()
 
                 is Command.Find ->{
                     while(true){
@@ -46,6 +47,8 @@ class ChooseCommand {
                         } else find(data)
                     }
                 }
+
+                is Command.Export -> export(EXPORT_TO_FILE)
 
                 is Command.Show -> {
                     while(true){

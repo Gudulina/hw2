@@ -46,6 +46,12 @@ sealed interface Command {
         }
     }
 
+    class Export() : Command{
+        override fun isValid(): Boolean {
+            return true
+        }
+    }
+
 
     class Help() : Command {
         override fun isValid(): Boolean {
@@ -55,8 +61,8 @@ sealed interface Command {
         fun printhelp() {
             println(
                 "add <Имя> <Номер телефона> - добавление имени и номера телефона в форомате +XXXXXXXXXXX\n" +
-                        "add <Имя> <Адрес электронной почты> добавление имени и дреса электронной почты\n" +
-                        "find -по email или телефону выводит список людей, для которых записано такое значение\n" +
+                        "add <Имя> mail <Адрес электронной почты> добавление имени и дреса электронной почты\n" +
+                        "find - по email или телефону выводит список людей, для которых записано такое значение\n" +
                         "show - показать номер телефона и емэйл указанного человека\n" +
                         "help - описание команд\n" +
                         "exit - завершение программы\n"
